@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/life_cycle"
+    app:startDestination="@id/k_LifeCycleActivity">
+
+    <activity
+        android:id="@+id/k_LifeCycleActivity"
+        android:name="com.fx.nettykotlin.lifecycle.K_LifeCycleActivity"
+        android:label="activity_k__life_cycle"
+        tools:layout="@layout/activity_k__life_cycle" />
+    <activity
+        android:id="@+id/j_LifecycleActivity"
+        android:name="com.fx.nettykotlin.lifecycle.J_LifecycleActivity"
+        android:label="activity_lifecycle"
+        tools:layout="@layout/activity_lifecycle" />
+</navigation>

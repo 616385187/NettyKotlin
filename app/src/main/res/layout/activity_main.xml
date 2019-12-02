@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+<!--    <Button-->
+<!--        android:id="@+id/lifecycle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="lifecycle" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/mtv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="76dp"-->
+<!--        android:layout_marginTop="166dp">-->
+
+<!--    </TextView>-->
+
+    <com.fx.nettykotlin.view.PolyToPolyView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.fx.nettykotlin.view.PolyToPolyView>
+</RelativeLayout>
