@@ -22,8 +22,8 @@
 
 <!--    </TextView>-->
 
-    <com.fx.nettykotlin.view.PolyToPolyView
+    <com.fx.nettykotlin.animateview.SomeBeatBalls
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.fx.nettykotlin.view.PolyToPolyView>
+    </com.fx.nettykotlin.animateview.SomeBeatBalls>
 </RelativeLayout>

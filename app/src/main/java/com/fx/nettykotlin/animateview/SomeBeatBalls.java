@@ -31,7 +31,7 @@ public class SomeBeatBalls extends View implements View.OnClickListener {
     Paint paint;
     private float angle;
     private float[][] ballPos;//保存小球位置
-    private int[] mColors = {Color.BLACK, Color.WHITE};
+    private int[] mColors = {Color.parseColor("#fad0c4"), Color.parseColor("#fecfef")};
     private LinearGradient[] linearGradient;//渐变
     private Path[] paths;//运动路径
 
