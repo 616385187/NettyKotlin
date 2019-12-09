@@ -5,25 +5,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    <Button-->
-<!--        android:id="@+id/lifecycle"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="lifecycle" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/lifecycle"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="lifecycle" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/mtv"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginStart="76dp"-->
-<!--        android:layout_marginTop="166dp">-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/mtv"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_marginStart="76dp"-->
+    <!--        android:layout_marginTop="166dp">-->
 
-<!--    </TextView>-->
+    <!--    </TextView>-->
 
-    <com.fx.nettykotlin.animateview.SomeBeatBalls
+    <com.fx.nettykotlin.animateviewgroup.ForceSizeChangeViewGroup
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.fx.nettykotlin.animateview.SomeBeatBalls>
+        android:layout_height="match_parent"
+
+        android:background="@android:color/transparent">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimary">
+
+        </View>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@color/colorAccent">
+
+        </View>
+    </com.fx.nettykotlin.animateviewgroup.ForceSizeChangeViewGroup>
 </RelativeLayout>
