@@ -102,6 +102,14 @@ public class ForceSizeChangeViewGroup extends ViewGroup implements View.OnClickL
     }
 
     @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        Log.i("fx", "dispatchDraw");
+//        canvas.drawPath(path, paint);
+//        path.reset();
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.i("fx", "onDraw");
