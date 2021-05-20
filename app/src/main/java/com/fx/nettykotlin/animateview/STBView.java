@@ -24,6 +24,7 @@ public class STBView extends View implements View.OnClickListener {
     private float baseLineY;
     private float baseLineMarginX;
     private RectF door;
+    private RectF temp;
 
     //上海
     private Path bgPath;
@@ -41,8 +42,8 @@ public class STBView extends View implements View.OnClickListener {
     int pathCount = 0;
 
     float baseTime;
-    float [] pos = new float[2];
-    float [] tan = new float[2];
+    float[] pos = new float[2];
+    float[] tan = new float[2];
 
     public STBView(Context context) {
         super(context);
@@ -62,6 +63,7 @@ public class STBView extends View implements View.OnClickListener {
         building = new Path();
         towerPath = new Path();
         outerPath = new Path();
+        temp = new RectF();
         pathMeasure = new PathMeasure();
         animator = ValueAnimator.ofFloat(0.01f, 1);
         animator.setDuration(300);
@@ -78,7 +80,7 @@ public class STBView extends View implements View.OnClickListener {
                     Log.i("fx_pathCount", "step-->" + step + "\tcount-->" + pathCount + "\tpathMeasure-->" + pathMeasure.getLength());
                 } else {
                     step += 1;
-                    step %=7;
+                    step %= 7;
                     pathCount = 0;
                     if (step == 1) {
                         pathMeasure.setPath(pathDoor, false);
@@ -92,16 +94,16 @@ public class STBView extends View implements View.OnClickListener {
                     } else if (step == 4) {
                         pathMeasure.setPath(building, false);
                         animator.start();
-                    }else if (step == 5) {
+                    } else if (step == 5) {
                         pathMeasure.setPath(outerPath, false);
                         animator.start();
-                    }else if (step == 6) {
+                    } else if (step == 6) {
                         pathMeasure.setPath(towerPath, false);
                         animator.start();
-                    }else if (step == 0) {
+                    } else if (step == 0) {
                         pathMeasure.setPath(path, false);
                         animator.start();
-                    }else {
+                    } else {
                         animator.cancel();
                         step = 0;
                     }
@@ -111,8 +113,8 @@ public class STBView extends View implements View.OnClickListener {
         animator.addUpdateListener(animation -> {
             offset = (float) animation.getAnimatedValue();
             Log.i("fx_addUpdateListener", offset + "step-->" + step);
-            if (step == 2){
-                scrollTo(0, (int) (getHeight()/2 * offset));
+            if (step == 2) {
+                scrollTo(0, (int) (getHeight() / 2 * offset));
             }
             invalidate();
         });
@@ -125,12 +127,17 @@ public class STBView extends View implements View.OnClickListener {
     }
 
     @Override
+    public void onDrawForeground(Canvas canvas) {
+        super.onDrawForeground(canvas);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setColor(Color.RED);
-        canvas.drawLine(2,0,2,getHeight()/2,paint);
+        canvas.drawLine(2, 0, 2, getHeight() / 2, paint);
         paint.setColor(Color.BLUE);
-        canvas.drawLine(2,getHeight()/2,2,getHeight(),paint);
+        canvas.drawLine(2, getHeight() / 2, 2, getHeight(), paint);
         Log.i("fx_onDraw", pathMeasure.getLength() + "");
 //        cache.reset();
 //        paint.setStyle(Paint.Style.STROKE);
@@ -145,6 +152,7 @@ public class STBView extends View implements View.OnClickListener {
         if (step == 0) {
 //            pathMeasure.setPath(path,false);
 //            while (pathMeasure.nextContour())
+            canvas.save();
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
@@ -152,14 +160,26 @@ public class STBView extends View implements View.OnClickListener {
             }
         }
 
+        canvas.save();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.BLUE);
+        canvas.drawRect(door, paint);
         if (step == 1) {
+            int id = canvas.save();
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.BLUE);
+                dst.computeBounds(temp, false);
+                canvas.drawRect(temp, paint);
                 paint.setStyle(Paint.Style.STROKE);
+                paint.setColor(Color.BLACK);
                 paint.setStrokeWidth(10);
                 canvas.drawPath(dst, paint);
             }
+
         }
-        if (step == 2){
+        if (step == 2) {
+            canvas.save();
 //            if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
 //                paint.setStyle(Paint.Style.STROKE);
 //                paint.setStrokeWidth(10);
@@ -167,14 +187,14 @@ public class STBView extends View implements View.OnClickListener {
 ////                canvas.drawPath(dst, paint);
 //            }
         }
-        if (step == 3){
+        if (step == 3) {
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
                 canvas.drawPath(dst, paint);
             }
         }
-        if (step == 4){
+        if (step == 4) {
 //            pathMeasure.setPath(building,false);
 //            while (pathMeasure.nextContour())
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
@@ -184,14 +204,14 @@ public class STBView extends View implements View.OnClickListener {
                 canvas.drawPath(dst, paint);
             }
         }
-        if (step == 5){
+        if (step == 5) {
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
                 canvas.drawPath(dst, paint);
             }
         }
-        if (step == 6){
+        if (step == 6) {
             if (pathMeasure.getSegment(0, offset * pathMeasure.getLength(), dst, true)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
@@ -214,7 +234,7 @@ public class STBView extends View implements View.OnClickListener {
 //        paint.setColor(Color.BLACK);
 //        canvas.drawPath(outerPath, paint);
 
-
+        Log.i("fx_canvas", "canvas" + canvas.getSaveCount());
     }
 
     @Override
@@ -226,7 +246,7 @@ public class STBView extends View implements View.OnClickListener {
         path.moveTo(baseLineMarginX, baseLineY);
         path.lineTo(w - baseLineMarginX, baseLineY);
         cache.moveTo(w - baseLineMarginX, baseLineY);
-        cache.lineTo(w/2, baseLineY);
+        cache.lineTo(w / 2, baseLineY);
 
 
         path.moveTo(baseLineMarginX + 100, baseLineY);
@@ -310,9 +330,9 @@ public class STBView extends View implements View.OnClickListener {
 
         float sh_base_line = baseLineY + h / 2f;
 
-        cache.quadTo(baseLineMarginX-h/8f, baseLineY+h/8f,w/2, baseLineY+h/4f);
+        cache.quadTo(baseLineMarginX - h / 8f, baseLineY + h / 8f, w / 2, baseLineY + h / 4f);
 //        cache.lineTo(w - baseLineMarginX, baseLineY+h/4f);
-        cache.quadTo(w - baseLineMarginX+h/8f, sh_base_line-h/8f,w/2, sh_base_line);
+        cache.quadTo(w - baseLineMarginX + h / 8f, sh_base_line - h / 8f, w / 2, sh_base_line);
 //        cache.lineTo(baseLineMarginX, sh_base_line);
 
         bgPath.moveTo(baseLineMarginX, sh_base_line);
@@ -455,7 +475,7 @@ public class STBView extends View implements View.OnClickListener {
     public void onClick(View v) {
         Log.i("fx", "getHeight()-->" + getHeight() + "getWidth()-->" + getWidth());
 //        scrollTo(0, getHeight() / 2);
-        if (animator.isRunning()){
+        if (animator.isRunning()) {
             return;
         }
         animator.start();
