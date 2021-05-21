@@ -1,6 +1,7 @@
 package com.fx.nettykotlin.proxy;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 
 import android.os.Bundle;
 
@@ -8,7 +9,7 @@ import com.fx.nettykotlin.R;
 
 import java.lang.reflect.Field;
 
-public class ProxyJavaActivity extends AppCompatActivity {
+public class ProxyJavaActivity extends AppCompatActivity implements IProxyInterface{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

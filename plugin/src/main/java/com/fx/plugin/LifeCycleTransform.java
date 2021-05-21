@@ -13,19 +13,23 @@ import com.android.build.api.transform.TransformInvocation;
 import com.android.build.api.transform.TransformOutputProvider;
 import com.android.build.gradle.internal.pipeline.TransformManager;
 import com.android.utils.FileUtils;
+import com.google.common.collect.Lists;
 
 import org.gradle.api.Project;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class LifeCycleTransform extends Transform {
+public class LifeCycleTransform extends Transform{
     Project project;
 
     public LifeCycleTransform(Project project) {
@@ -76,8 +80,11 @@ public class LifeCycleTransform extends Transform {
                         Format.JAR);
                 //将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
 //                FileUtils.copyFile(jarInput.getFile(), dest);
-                project.getLogger().warn("jarInput----->" + jarInput.getName() );
-                scanJar(jarInput);
+                project.getLogger().warn("jarInput----->" + jarInput.getName());
+                if (jarInput.getName().contains("jetbrains") || jarInput.getName().contains("androidx") || jarInput.getName().contains("android")) {
+                    continue;
+                }
+//                scanJar(jarInput);
             }
             for (DirectoryInput directoryInput : input.getDirectoryInputs()) {
                 File dest = outputProvider.getContentLocation(directoryInput.getName(),
@@ -86,6 +93,7 @@ public class LifeCycleTransform extends Transform {
                 //将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
 //                FileUtils.copyDirectory(directoryInput.getFile(), dest);
                 project.getLogger().warn("directoryInput----->" + directoryInput.getFile().getAbsolutePath() + "dest-->" + dest.getAbsolutePath());
+                scanFile(directoryInput.getFile());
             }
         }
         project.getLogger().warn("***********************transform end****************************");
@@ -101,10 +109,20 @@ public class LifeCycleTransform extends Transform {
             jarFile.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
     }
 
+    public void scanFile(File file) {
+        File[] list = file.listFiles();
+        for (File file2 : list) {
+            if (file2.isDirectory()) {
+                scanFile(file2);
+            } else {
+                project.getLogger().warn("directoryInput----->" + file2.getAbsolutePath());
+            }
+        }
+    }
 
 }
